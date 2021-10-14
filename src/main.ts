@@ -1,5 +1,5 @@
 import AgilHesapla from "./agil-hesapla";
-import "./style.css";
+import "./style.scss";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 
@@ -56,16 +56,16 @@ const sonucOlustur = (agil: AgilHesapla) => `
   <div>
       ${
         agil.sonuc.disaridaKalanKoyunSayisi
-          ? `<div class="fazlalik">
+          ? `<div class="agillar-fazlalik">
               Dışarıda Kalan Koyun: ${agil.sonuc.disaridaKalanKoyunSayisi}
             </div>`
           : ""
       }
 
       <div class="agillar">
-        ${Object.values(agil.sonuc.agillar).map(
-          (adet) => `<p>${agil.agilDurumu(adet)}</p>`
-        )}
+        ${Object.values(agil.sonuc.agillar)
+          .map((adet) => `<div class="agil">${agil.agilDurumu(adet)}</div>`)
+          .join("")}
       </div>
 
   </div>
