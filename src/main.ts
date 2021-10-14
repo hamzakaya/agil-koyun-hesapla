@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", (e: SubmitEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-
+    const formData = new FormData(form);
+    
     // const data = Object.fromEntries(
     //   Array.from(formData.keys()).map((key) => [key, ~~formData.get(key)])
     // );
