@@ -28,34 +28,30 @@ app.innerHTML = `
   <div id="sonuc"></div>
 `;
 
-
 document.addEventListener("DOMContentLoaded", () => {
-  
-  document.title = 'Ağıl Hesaplama'
-  const form = document.querySelector<HTMLFormElement>("#form");
-  const sonucDiv = document.querySelector<HTMLDivElement>("#sonuc");
-  
+  document.title = "Ağıl Hesaplama";
+  const form = document.querySelector("#form") as HTMLFormElement;
+  const sonucDiv = document.querySelector("#sonuc") as HTMLDivElement;
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    
-    const data = Object.fromEntries(
-      Array.from(formData.keys()).map((key) => [key, ~~formData.get(key)])
-    );
 
-    // const agil = new AgilHesapla({
-    //   adet: ~~formData.get("adet"),
-    //   kapasite: ~~formData.get("kapasite"),
-    //   koyunSayisi: ~~formData.get("koyunSayisi"),
-    // } );
+    // const data = Object.fromEntries(
+    //   Array.from(formData.keys()).map((key) => [key, ~~formData.get(key)])
+    // );
+    // const agil = new AgilHesapla(data);
 
-    const agil = new AgilHesapla(data);
-    
-    sonucDiv.innerHTML = sonucOlustur(agil)
+    const agil = new AgilHesapla({
+      adet: ~~formData.get("adet"),
+      kapasite: ~~formData.get("kapasite"),
+      koyunSayisi: ~~formData.get("koyunSayisi"),
+    });
+
+    sonucDiv.innerHTML = sonucOlustur(agil);
   });
-
 });
-  
+
 const sonucOlustur = (agil: AgilHesapla) => `
   <div>
       ${
@@ -67,8 +63,9 @@ const sonucOlustur = (agil: AgilHesapla) => `
       }
 
       <div class="agillar">
-        ${Object.values(agil.sonuc.agillar)
-          .map((adet) => `<p>${agil.agilDurumu(adet)}</p>`)}
+        ${Object.values(agil.sonuc.agillar).map(
+          (adet) => `<p>${agil.agilDurumu(adet)}</p>`
+        )}
       </div>
 
   </div>
