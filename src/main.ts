@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#form") as HTMLFormElement;
   const sonucDiv = document.querySelector("#sonuc") as HTMLDivElement;
   
-  form.addEventListener<EventListener>("submit", (e: SubmitEvent) => {
+  form.addEventListener("submit", (e: SubmitEvent) => {
     e.preventDefault();
     const formData = new FormData(form);
 
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     sonucDiv.innerHTML = sonucOlustur(agil);
-  });
+  } as EventListener);
 });
 
 const sonucOlustur = (agil: AgilHesapla) => `
