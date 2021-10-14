@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   form.addEventListener("submit", ((e: SubmitEvent) => {
     e.preventDefault();
-    const formData = new FormData(form);
+    const formData = new FormData(form) as FormData;
 
     // const data = Object.fromEntries(
     //   Array.from(formData.keys()).map((key) => [key, ~~formData.get(key)])
@@ -43,9 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // const agil = new AgilHesapla(data);
 
     const agil = new AgilHesapla({
-      adet: ~~formData.get("adet") || 0,
-      kapasite: ~~formData.get("kapasite") || 0,
-      koyunSayisi: ~~formData.get("koyunSayisi") || 0,
+      adet: Number(formData.get("adet")),
+      kapasite: Number(formData.get("kapasite")),
+      koyunSayisi: Number(formData.get("koyunSayisi")),
     });
 
     sonucDiv.innerHTML = sonucOlustur(agil);
