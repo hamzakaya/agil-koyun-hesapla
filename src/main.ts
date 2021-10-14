@@ -1,0 +1,75 @@
+import AgilHesapla from "./agil-hesapla";
+import "./style.css";
+
+const app = document.querySelector<HTMLDivElement>("#app")!;
+
+app.innerHTML = `
+  <form class="agil-form" id="form">
+
+    <div class="form-item">
+      <label for="adet">Ağıl Sayısı</label>
+      <input type="number" required name="adet" />
+    </div>
+
+    <div class="form-item">
+      <label for="kapasite">Ağıl Kapasitesi</label>
+      <input type="number" required name="kapasite" />
+    </div>
+
+    <div class="form-item">
+      <label for="koyunSayisi">Koyun Sayısı</label>
+      <input type="number" required name="koyunSayisi" />
+    </div>
+    
+
+    <button type="submit">YERLEŞTİR</button>
+  </form>
+
+  <div id="sonuc"></div>
+`;
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  
+  document.title = 'Ağıl Hesaplama'
+  const form = document.querySelector<HTMLFormElement>("#form");
+  const sonucDiv = document.querySelector<HTMLDivElement>("#sonuc");
+  
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    
+    const data = Object.fromEntries(
+      Array.from(formData.keys()).map((key) => [key, ~~formData.get(key)])
+    );
+
+    // const agil = new AgilHesapla({
+    //   adet: ~~formData.get("adet"),
+    //   kapasite: ~~formData.get("kapasite"),
+    //   koyunSayisi: ~~formData.get("koyunSayisi"),
+    // } );
+
+    const agil = new AgilHesapla(data);
+    
+    sonucDiv.innerHTML = sonucOlustur(agil)
+  });
+
+});
+  
+const sonucOlustur = (agil: AgilHesapla) => `
+  <div>
+      ${
+        agil.sonuc.disaridaKalanKoyunSayisi
+          ? `<div class="fazlalik">
+              Dışarıda Kalan Koyun: ${agil.sonuc.disaridaKalanKoyunSayisi}
+            </div>`
+          : ""
+      }
+
+      <div class="agillar">
+        ${Object.values(agil.sonuc.agillar)
+          .map((adet) => `<p>${agil.agilDurumu(adet)}</p>`)}
+      </div>
+
+  </div>
+`;
