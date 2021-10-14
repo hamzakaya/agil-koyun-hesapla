@@ -8,17 +8,17 @@ app.innerHTML = `
 
     <div class="form-item">
       <label for="adet">Ağıl Sayısı</label>
-      <input type="number" required name="adet" />
+      <input type="number" min="0" required name="adet" />
     </div>
 
     <div class="form-item">
       <label for="kapasite">Ağıl Kapasitesi</label>
-      <input type="number" required name="kapasite" />
+      <input type="number" min="0" required name="kapasite" />
     </div>
 
     <div class="form-item">
       <label for="koyunSayisi">Koyun Sayısı</label>
-      <input type="number" required name="koyunSayisi" />
+      <input type="number" min="0" required name="koyunSayisi" />
     </div>
     
 
