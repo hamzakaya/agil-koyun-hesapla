@@ -5,16 +5,23 @@ type PropsType = {
 };
 
 export default class AgilHesapla {
-  private adet: number;
-  private kapasite: number;
-  private koyunSayisi: number;
-  protected agillar: Map<number, number>;
+  adet: number;
+  kapasite: number;
+  koyunSayisi: number;
+
+  disaridaKalanKoyunSayisi: number
+  agillar: Map<number, number>;
 
   constructor({ adet, kapasite, koyunSayisi }: PropsType) {
     this.adet = adet;
     this.kapasite = kapasite;
     this.koyunSayisi = koyunSayisi;
     this.agillar = new Map();
+
+    this.disaridaKalanKoyunSayisi = Math.max(
+      0,
+      this.koyunSayisi - this.adet * this.kapasite
+    );
 
     this.#agillariOlustur();
     this.#koyunlariYerlestir();
@@ -55,7 +62,7 @@ export default class AgilHesapla {
       });
   }
 
-  agilDurumu(adet: number): string {
+  #agilDurumu(adet: number): string {
     switch (adet) {
       case 0:
         return "Boş Ağıl";
@@ -68,13 +75,26 @@ export default class AgilHesapla {
     }
   }
 
-  get sonuc() {
-    return {
-      agillar: Object.fromEntries(this.agillar.entries()),
-      disaridaKalanKoyunSayisi: Math.max(
-        0,
-        this.koyunSayisi - this.adet * this.kapasite
-      ),
-    };
+  get sonuc(): string {
+    return `
+      <div>
+          ${
+            this.disaridaKalanKoyunSayisi
+              ? `<div class="agillar-fazlalik">
+                  Dışarıda Kalan Koyun: ${this.disaridaKalanKoyunSayisi}
+                </div>`
+              : ""
+          }
+
+          <div class="agillar">
+            ${Array.from(this.agillar.values())
+              .map(
+                (adet) => `<div class="agil">${this.#agilDurumu(adet)}</div>`
+              )
+              .join("")}
+          </div>
+
+      </div>
+    `;
   }
 }
